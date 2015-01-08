@@ -38,8 +38,8 @@ class CheeseSpreader
   attr_method :spread, :cheese, crackers: Jacobs.new
 
   def spread
-  	raise CheeseError unless cheese.is_a?(Cheddar)
-  	cheese.spread_on(crackers)
+  raise CheeseError unless cheese.is_a?(Cheddar)
+  cheese.spread_on(crackers)
   end
 end
 
@@ -72,11 +72,11 @@ gem 'attire'
 
 And then execute:
 
-    $ bundle
+  $ bundle
 
 Or install it yourself as:
 
-    $ gem install attire
+  $ gem install attire
 
 
 ## Contributing

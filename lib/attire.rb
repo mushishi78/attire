@@ -16,22 +16,22 @@ module Attire
 
   def attr_method(verb, *args, &b)
     define_singleton_method(verb) { |*a| new(*a).send(verb) }
-	  attr_init(*args, &b)
-	end
+    attr_init(*args, &b)
+  end
 
-	def fattr_init(*args, &b)
+  def fattr_init(*args, &b)
     attr_init(*args) do
-    	instance_eval(&b) if b
-    	self.freeze
+    instance_eval(&b) if b
+    self.freeze
     end
   end
 
   def fattr_method(verb, *args, &b)
     define_singleton_method(verb) { |*a| new(*a).send(verb) }
-	  fattr_init(*args, &b)
-	end
+    fattr_init(*args, &b)
+  end
 end
 
 class Module
-	include Attire
+  include Attire
 end

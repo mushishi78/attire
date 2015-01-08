@@ -13,15 +13,15 @@ describe '#attr_init' do
   end
 
   context 'with optional hash missing' do
-  	let(:instance) { define_class(inside).new(1, 2) }
+    let(:instance) { define_class(inside).new(1, 2) }
 
-	  it 'still assigns arguments to private methods using default' do
-	    expect(instance.send(:option1)).to eq(23)
-	  end
+    it 'still assigns arguments to private methods using default' do
+      expect(instance.send(:option1)).to eq(23)
+    end
   end
 
   context 'with input of wrong type' do
-  	let(:inside) { Proc.new { attr_init 'Strings bad' } }
+    let(:inside) { Proc.new { attr_init 'Strings bad' } }
     it { expect { define_class(inside) }.to raise_error(ArgumentError) }
   end
 

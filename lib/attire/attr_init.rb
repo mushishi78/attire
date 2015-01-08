@@ -43,7 +43,7 @@ module Attire
     end
 
     def type_check
-      return if args.all? {|a| [Symbol, Hash].include?(a.class) }
+      return if args.all? { |a| [Symbol, Hash].include?(a.class) }
       fail ArgumentError, 'Must be Symbol or Hash.'
     end
 

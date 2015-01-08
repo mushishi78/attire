@@ -1,7 +1,7 @@
 describe '#attr_init' do
   let(:instance) { define_class(inside).new(1, 2, option1: 54) }
   let(:inside) do
-    Proc.new { attr_init :argument1, :argument2, option1: 23, option2: 'default', option3: nil }
+    proc { attr_init :argument1, :argument2, option1: 23, option2: 'default', option3: nil }
   end
 
   it 'assigns arguments to private methods' do
@@ -21,7 +21,7 @@ describe '#attr_init' do
   end
 
   context 'with input of wrong type' do
-    let(:inside) { Proc.new { attr_init 'Strings bad' } }
+    let(:inside) { proc { attr_init 'Strings bad' } }
     it { expect { define_class(inside) }.to raise_error(ArgumentError) }
   end
 
@@ -37,11 +37,10 @@ describe '#attr_init' do
 
   context 'with block' do
     let(:instance) { define_class(inside).new(1) }
-    let(:inside) { Proc.new { attr_init :foo do @foo = 5 end } }
+    let(:inside) { proc { attr_init :foo do @foo = 5 end } }
 
     it 'calls block' do
       expect(instance.send(:foo)).to eq(5)
     end
   end
 end
-

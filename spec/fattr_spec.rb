@@ -1,6 +1,6 @@
 describe '#fattr_init' do
   let(:instance) { define_class(inside).new(5) }
-  let(:inside) { Proc.new { fattr_init :chick } }
+  let(:inside) { proc { fattr_init :chick } }
 
   it 'freezes class after initializing' do
     expect(instance.send(:chick)).to eq(5)
@@ -8,10 +8,9 @@ describe '#fattr_init' do
   end
 
   context 'with block' do
-    let(:inside) { Proc.new { fattr_init :chick do @chick = 15 end } }
+    let(:inside) { proc { fattr_init :chick do @chick = 15 end } }
     it 'still evaluates block' do
       expect(instance.send(:chick)).to eq(15)
     end
   end
 end
-

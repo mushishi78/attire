@@ -2,7 +2,7 @@ describe '#attr_query' do
   context 'with correct arguments' do
     let(:instance) { define_class(inside).new }
     let(:inside) do
-      Proc.new { attr_accessor :foo; attr_query :foo? }
+      proc { attr_accessor :foo; attr_query :foo? }
     end
 
     it 'creates a query method' do
@@ -13,7 +13,7 @@ describe '#attr_query' do
   end
 
   context 'without a tailing questionmark' do
-    let(:inside) { Proc.new { attr_query :bar } }
+    let(:inside) { proc { attr_query :bar } }
     it { expect { define_class(inside) }.to raise_error }
   end
 end

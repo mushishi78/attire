@@ -5,7 +5,7 @@ module Attire
   def attr_query(*names)
     names.each do |name|
       name = name.to_s
-      fail ArgumentError, "`#{name}?`, not `#{name}`." unless name.end_with?("?")
+      fail ArgumentError, "`#{name}?`, not `#{name}`." unless name.end_with?('?')
       define_method(name) { !!send(name.chop) }
     end
   end
@@ -21,8 +21,8 @@ module Attire
 
   def fattr_init(*args, &b)
     attr_init(*args) do
-    instance_eval(&b) if b
-    self.freeze
+      instance_eval(&b) if b
+      freeze
     end
   end
 

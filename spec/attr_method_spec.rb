@@ -1,6 +1,6 @@
 describe '#attr_method' do
   let(:klass) do
-    klass = Class.new do
+    Class.new do
       attr_method :select, :child, toy: 5
 
       def select

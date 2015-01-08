@@ -37,7 +37,7 @@ describe '#attr_init' do
 
   context 'with block' do
     let(:instance) { define_class(inside).new(1) }
-    let(:inside) { proc { attr_init :foo do @foo = 5 end } }
+    let(:inside) { proc { attr_init(:foo) { @foo = 5 } } }
 
     it 'calls block' do
       expect(instance.send(:foo)).to eq(5)

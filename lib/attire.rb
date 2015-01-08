@@ -1,4 +1,3 @@
-require 'attire/version'
 require 'attire/attr_init'
 
 module Attire

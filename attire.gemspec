@@ -1,21 +1,14 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'attire/version'
+version = File.read(File.expand_path("../VERSION", __FILE__)).strip
 
-Gem::Specification.new do |spec|
-  spec.name          = 'attire'
-  spec.version       = Attire::VERSION
-  spec.authors       = ['Max White']
-  spec.email         = ['mushishi78@gmail.com']
-  spec.summary       = 'Convenience methods to remove some boiler plate in defining classes.'
-  spec.homepage      = 'https://github.com/mushishi78/attire'
-  spec.license       = 'MIT'
-
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(/^bin/) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(/^(test|spec|features)/)
-  spec.require_paths = ['lib']
-
-  spec.add_development_dependency 'rspec', '~> 3.1'
+Gem::Specification.new do |s|
+  s.name         = 'attire'
+  s.version      = version
+  s.author       = 'Max White'
+  s.email        = 'mushishi78@gmail.com'
+  s.summary      = 'Convenience methods to remove some boiler plate in defining classes.'
+  s.license      = 'MIT'
+  s.files        = Dir['LICENSE.txt', 'README.md', 'lib/**/*']
+  s.require_path = 'lib'
+  s.add_development_dependency 'rspec', '~> 3.1', '>= 3.1.0'
 end

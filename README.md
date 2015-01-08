@@ -1,5 +1,7 @@
 # Attire
 
+[![Gem Version](https://badge.fury.io/rb/attire.svg)](http://badge.fury.io/rb/attire)
+
 Convenience methods to remove some boiler plate in defining classes. Heavily inspired by [attr_extras](https://github.com/barsoom/attr_extras).
 
 ## Usage

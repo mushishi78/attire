@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/attire.svg)](http://badge.fury.io/rb/attire)
 
-Convenience methods to remove some boiler plate in defining classes. Heavily inspired by [attr_extras](https://github.com/barsoom/attr_extras).
+Convenience methods to remove some boiler plate in defining classes. Inspired by [attr_extras](https://github.com/barsoom/attr_extras).
 
 ## Usage
 
@@ -11,7 +11,7 @@ Convenience methods to remove some boiler plate in defining classes. Heavily ins
 Defines the following:
 
 ``` ruby
-def initializer(foo, bar, opts = {})
+def initialize(foo, bar, opts = {})
 	@foo = foo
 	@bar = bar
 	@fizz = opts[:fizz] || 15
@@ -23,11 +23,23 @@ private
 attr_reader :foo, :bar, :fizz, :pop
 ```
 
-`attr_init` can also accept a block which will be invoked after initialization.
+Splat arguments and blocks can also be defined:
+
+``` ruby
+attr_init :'*args', :'&block'
+```
+
+If a block is provided, it will be evaluated after initialization:
+
+``` ruby
+attr_init :foo do
+  @foo = foo ** 2
+end
+```
 
 ### `attr_method :select, :bar`
 
-Shortcut for:
+Defines the following:
 
 ``` ruby
 attr_init :bar
@@ -49,10 +61,7 @@ class CheeseSpreader
   end
 end
 
-...
-
-my_cheese = Roquefort.new
-CheeseSpreader.spread(my_cheese) # CheeseError
+CheeseSpreader.spread(Roquefort.new) # CheeseError
 ```
 
 ### `attr_query :foo?`

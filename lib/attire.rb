@@ -9,13 +9,13 @@ module Attire
     end
   end
 
-  def attr_init(*args, &b)
-    AttrInit.apply(self, args, b)
+  def attr_init(*names, &b)
+    AttrInit.apply(self, names, b)
   end
 
-  def attr_method(verb, *args, &b)
+  def attr_method(verb, *names, &b)
     define_singleton_method(verb) { |*a, &b| new(*a, &b).send(verb) }
-    attr_init(*args, &b)
+    attr_init(*names, &b)
   end
 end
 

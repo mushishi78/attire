@@ -55,15 +55,6 @@ CheeseSpreader.spread(my_cheese) # CheeseError
 
 Defines query methods like `foo?`, which is true if `foo` is truthy.
 
-### `fattr_init :foo`
-
-Calls `self.freeze` after initialization to make object immutable.
-
-### `fattr_method :foo`
-
-Same as `fattr_init`, only for `attr_method`.
-
-
 ## Installation
 
 Add this line to your application's Gemfile:

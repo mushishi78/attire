@@ -17,18 +17,6 @@ module Attire
     define_singleton_method(verb) { |*a| new(*a).send(verb) }
     attr_init(*args, &b)
   end
-
-  def fattr_init(*args, &b)
-    attr_init(*args) do
-      instance_eval(&b) if b
-      freeze
-    end
-  end
-
-  def fattr_method(verb, *args, &b)
-    define_singleton_method(verb) { |*a| new(*a).send(verb) }
-    fattr_init(*args, &b)
-  end
 end
 
 class Module

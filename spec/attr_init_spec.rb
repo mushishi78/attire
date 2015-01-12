@@ -83,7 +83,7 @@ describe '#attr_init' do
   end
 
   context 'with hash, splat and block args and after_initialize block' do
-    let(:inside) { proc { attr_init(:foo, {a: 4, b: 6}, :'*args', :'&block'){ @a -= 1 } } }
+    let(:inside) { proc { attr_init(:foo, { a: 4, b: 6 }, :'*args', :'&block') { @a -= 1 } } }
 
     context 'with only necessary arguments' do
       let(:instance) { define_class(inside).new(1) }
@@ -98,7 +98,7 @@ describe '#attr_init' do
     end
 
     context 'with all argument types' do
-      let(:instance) { define_class(inside).new('foo', {a: 9}, :fish, :candle) { 'block' } }
+      let(:instance) { define_class(inside).new('foo', { a: 9 }, :fish, :candle) { 'block' } }
 
       it 'assigns arguments to private methods accordingly' do
         expect(instance.send(:foo)).to eq('foo')
@@ -108,7 +108,5 @@ describe '#attr_init' do
         expect(instance.send(:block).call).to eq('block')
       end
     end
-
   end
-
 end

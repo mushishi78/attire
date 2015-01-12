@@ -1,13 +1,13 @@
 module Attire
-	class Initializer
-		def initialize(names, splat_name, block_name, after_initialize)
-			@names = names
-			@splat_name = splat_name
-			@block_name = block_name
-			@after_initialize = after_initialize
-		end
+  class Initializer
+    def initialize(names, splat_name, block_name, after_initialize)
+      @names = names
+      @splat_name = splat_name
+      @block_name = block_name
+      @after_initialize = after_initialize
+    end
 
-		def instance_initialize(instance, values, value_block)
+    def instance_initialize(instance, values, value_block)
       @instance, @values, @value_block = instance, values, value_block
       arity_check
       set_ivars
@@ -17,7 +17,7 @@ module Attire
     private
 
     attr_reader :names, :splat_name, :block_name, :after_initialize,
-    						:instance, :values, :value_block
+                :instance, :values, :value_block
 
     def set_ivars
       names.zip(values).each do |name, value|
@@ -68,5 +68,5 @@ module Attire
     def arity_range
       @arity_range ||= (min_arity..max_arity)
     end
-	end
+  end
 end

@@ -68,7 +68,7 @@ module Attire
 
     def excess_splat_and_block_names_check
       return if names.none? { |n| n.to_s.start_with?('&', '*') }
-      fail ArgumentError, "Splat and Block arguments must be last"
+      fail ArgumentError, 'Splat and Block arguments must be last'
     end
   end
 end

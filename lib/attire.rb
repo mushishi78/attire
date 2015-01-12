@@ -14,7 +14,7 @@ module Attire
   end
 
   def attr_method(verb, *args, &b)
-    define_singleton_method(verb) { |*a| new(*a).send(verb) }
+    define_singleton_method(verb) { |*a, &b| new(*a, &b).send(verb) }
     attr_init(*args, &b)
   end
 end

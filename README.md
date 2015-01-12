@@ -63,6 +63,12 @@ Add to Gemfile:
 gem 'attire'
 ```
 
+Require library:
+
+``` ruby
+require 'attire'
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/attire/fork )

@@ -57,20 +57,11 @@ Defines query methods like `foo?`, which is true if `foo` is truthy.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add to Gemfile:
 
 ```ruby
 gem 'attire'
 ```
-
-And then execute:
-
-  $ bundle
-
-Or install it yourself as:
-
-  $ gem install attire
-
 
 ## Contributing
 

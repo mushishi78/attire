@@ -32,8 +32,8 @@ Shortcut for:
 ``` ruby
 attr_init :bar
 
-def self.select(bar)
-  new(bar).select
+def self.select(*args, &block)
+  new(*args, &block).select
 end
 ```
 

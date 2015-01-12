@@ -8,7 +8,7 @@ Convenience methods to remove some boiler plate in defining classes. Heavily ins
 
 ### `attr_init :foo, :bar, fizz: 15, pop: nil`
 
-Defines the following initializer:
+Defines the following:
 
 ``` ruby
 def initializer(foo, bar, opts = {})
@@ -17,6 +17,10 @@ def initializer(foo, bar, opts = {})
 	@fizz = opts[:fizz] || 15
 	@pop = opts[:pop]
 end
+
+private
+
+attr_reader :foo, :bar, :fizz, :pop
 ```
 
 `attr_init` can also accept a block which will be invoked after initialization.

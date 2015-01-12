@@ -44,8 +44,8 @@ class CheeseSpreader
   attr_method :spread, :cheese, crackers: Jacobs.new
 
   def spread
-  raise CheeseError unless cheese.is_a?(Cheddar)
-  cheese.spread_on(crackers)
+    raise CheeseError unless cheese.is_a?(Cheddar)
+    cheese.spread_on(crackers)
   end
 end
 

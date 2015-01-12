@@ -57,7 +57,7 @@ CheeseSpreader.spread(my_cheese) # CheeseError
 
 ### `attr_query :foo?`
 
-Defines query methods like `foo?`, which is true if `foo` is truthy.
+Defines query `foo?`, which is true if `foo` is truthy.
 
 ## Installation
 

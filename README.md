@@ -1,5 +1,6 @@
 # Attire
 
+[![Build Status](https://travis-ci.org/mushishi78/attire.svg?branch=master)](https://travis-ci.org/mushishi78/attire)
 [![Gem Version](https://badge.fury.io/rb/attire.svg)](http://badge.fury.io/rb/attire)
 
 Convenience methods to remove some boiler plate in defining classes. Inspired by [attr_extras](https://github.com/barsoom/attr_extras).

@@ -27,8 +27,8 @@ module Attire
     attr_reader :klass, :names, :splat_name, :block_name, :after_initialize
 
     def type_check
-      return if names.all? { |n| [Symbol, Hash].include?(n.class) }
-      fail ArgumentError, 'Must be Symbol or Hash.'
+      return if names.all? { |n| [Symbol, String, Hash].include?(n.class) }
+      fail ArgumentError, 'Must be Symbol, String or Hash.'
     end
 
     def extract_splat_and_block_names

@@ -1,9 +1,18 @@
 require 'attire'
 
 describe '#attr_init' do
-  context 'with input of wrong type' do
-    subject { Class.new { attr_init 78 } }
-    it { expect { subject }.to raise_error }
+  describe 'input types' do
+    it 'accepts Symbols, Strings and Hashes' do
+      expect { Class.new { attr_init 'foo', :bar, { baz: 23 } } }.to_not raise_error
+    end
+
+    it 'does not allow numbers' do
+      expect { Class.new { attr_init 78 } }.to raise_error
+    end
+
+    it 'does not allow arrays' do
+      expect { Class.new { attr_init [23, 45] } }.to raise_error
+    end
   end
 
   describe 'necessary arguments' do

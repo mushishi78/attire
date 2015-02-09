@@ -21,7 +21,7 @@ module Attire
 
     def set_ivars
       names.zip(values).each do |name, value|
-        name.is_a?(Symbol) ? set_ivar(name, value) : set_hash(name, value)
+        name.is_a?(Hash) ? set_hash(name, value) : set_ivar(name, value)
       end
       set_splat
       set_block

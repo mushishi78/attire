@@ -30,7 +30,9 @@ module Attire
     def set_hash(defaults, values)
       values ||= {}
       hash_check(values)
-      defaults.each { |name, default| set_ivar(name, values[name] || default) }
+      defaults.each do |name, default|
+        set_ivar(name, values[name].nil? ? default : values[name])
+      end
     end
 
     def set_splat

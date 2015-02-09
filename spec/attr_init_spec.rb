@@ -20,6 +20,14 @@ describe '#attr_init' do
     end
   end
 
+  context 'with a non-nil falsy optional argument' do
+    let(:instance) { define_class(inside).new(1, 2, option1: false) }
+
+    it 'accepts argument' do
+      expect(instance.send(:option1)).to eq(false)
+    end
+  end
+
   context 'with input of wrong type' do
     let(:inside) { proc { attr_init 'Strings bad' } }
     it { expect { define_class(inside) }.to raise_error(ArgumentError) }

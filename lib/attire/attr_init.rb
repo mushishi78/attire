@@ -13,6 +13,7 @@ module Attire
     def apply
       type_check
       extract_splat_and_block_names
+      optional_arguments_check
       instance_initialize = initializer.method(:instance_initialize)
 
       klass.send(:define_method, :initialize) do |*values, &value_block|
@@ -49,7 +50,11 @@ module Attire
     end
 
     def getter_names
-      getter_names = names.map { |arg| arg.respond_to?(:keys) ? arg.keys : arg }
+      getter_names = names.map do |arg|
+        next arg.keys if arg.respond_to?(:keys)
+        next optional_name(arg) if optional?(arg)
+        arg
+      end
       getter_names += [splat_name, block_name]
       getter_names.flatten.compact
     end
@@ -69,6 +74,21 @@ module Attire
     def excess_splat_and_block_names_check
       return if names.none? { |n| n.to_s.start_with?('&', '*') }
       fail ArgumentError, 'Splat and Block arguments must be last'
+    end
+
+    def optional_arguments_check
+      start = names.find_index { |n| optional?(n) }
+      return unless start
+      return if names[start..-1].all? { |n| n.is_a?(Hash) || optional?(n) }
+      fail ArgumentError, 'Required arguments must come before optional'
+    end
+
+    def optional?(name)
+      name.to_s.include?('=')
+    end
+
+    def optional_name(name)
+      name.to_s.split('=')[0].strip
     end
   end
 end

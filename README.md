@@ -24,10 +24,10 @@ private
 attr_reader :foo, :bar, :fizz, :pop
 ```
 
-Splat arguments and blocks can also be defined:
+Optional, splat and blocks arguments can also be defined:
 
 ``` ruby
-attr_init :'*args', :'&block'
+attr_init :'opts = {}', :'*args', :'&block'
 ```
 
 If a block is provided, it will be evaluated after initialization:

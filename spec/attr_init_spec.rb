@@ -3,7 +3,7 @@ require 'attire'
 describe '#attr_init' do
   describe 'input types' do
     it 'accepts Symbols, Strings and Hashes' do
-      expect { Class.new { attr_init 'foo', :bar, { baz: 23 } } }.to_not raise_error
+      expect { Class.new { attr_init 'foo', :bar,  baz: 23  } }.to_not raise_error
     end
 
     it 'does not allow numbers' do
@@ -15,7 +15,7 @@ describe '#attr_init' do
     end
   end
 
-  describe 'necessary arguments' do
+  describe 'required arguments' do
     subject { Class.new { attr_init :foo, :bar } }
 
     it 'assigns arguments and provides private getters' do
@@ -33,7 +33,31 @@ describe '#attr_init' do
     end
   end
 
-  describe 'optional hash' do
+  describe 'optional arguments' do
+    subject { Class.new { attr_init :'foo = 13' } }
+
+    it 'assigns default if argument missing' do
+      instance = subject.new
+      expect(instance.send(:foo)).to eq(13)
+    end
+
+    it 'assigns value if argument present' do
+      instance = subject.new(18)
+      expect(instance.send(:foo)).to eq(18)
+    end
+
+    it 'handles a non-nil falsy optional argument' do
+      instance = subject.new(false)
+      expect(instance.send(:foo)).to eq(false)
+    end
+
+    context 'with optional argument before required argument' do
+      subject { Class.new { attr_init :'foo = 13', :bar } }
+      it { expect { subject }.to raise_error }
+    end
+  end
+
+  describe 'hash' do
     subject { Class.new { attr_init :foo, bar: 23 } }
 
     it 'assigns default if argument missing' do
@@ -79,12 +103,17 @@ describe '#attr_init' do
       expect(instance.send(:args)).to eq([])
     end
 
-    context 'with splat before necessary argument' do
+    context 'with splat before required argument' do
       subject { Class.new { attr_init :'*args', :foo } }
       it { expect { subject }.to raise_error }
     end
 
-    context 'with splat before optional hash' do
+    context 'with splat before optional argument' do
+      subject { Class.new { attr_init :'*args', :'foo = 34' } }
+      it { expect { subject }.to raise_error }
+    end
+
+    context 'with splat before hash' do
       subject { Class.new { attr_init :'*args', foo: 34 } }
       it { expect { subject }.to raise_error }
     end
@@ -103,12 +132,17 @@ describe '#attr_init' do
       expect(instance.send(:block).call).to eq('this is a block')
     end
 
-    context 'with block before necessary argument' do
+    context 'with block before required argument' do
       subject { Class.new { attr_init :'&block', :foo } }
       it { expect { subject }.to raise_error }
     end
 
-    context 'with block before optional hash' do
+    context 'with block before optional argument' do
+      subject { Class.new { attr_init :'&block', :'foo = 34' } }
+      it { expect { subject }.to raise_error }
+    end
+
+    context 'with block before hash' do
       subject { Class.new { attr_init :'&block', foo: 34 } }
       it { expect { subject }.to raise_error }
     end
@@ -131,7 +165,7 @@ describe '#attr_init' do
       end
     end
 
-    it 'assigns defaults with only necessary arguments' do
+    it 'assigns defaults with only required arguments' do
       instance = subject.new(1)
       expect(instance.send(:foo)).to eq(1)
       expect(instance.send(:a)).to eq(3)

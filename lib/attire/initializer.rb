@@ -21,7 +21,9 @@ module Attire
 
     def set_ivars
       names.zip(values).each do |name, value|
-        name.is_a?(Hash) ? set_hash(name, value) : set_ivar(name, value)
+        next set_hash(name, value) if name.is_a?(Hash)
+        next set_optional(name, value) if optional?(name)
+        set_ivar(name, value)
       end
       set_splat
       set_block
@@ -33,6 +35,12 @@ module Attire
       defaults.each do |name, default|
         set_ivar(name, values[name].nil? ? default : values[name])
       end
+    end
+
+    def set_optional(name, value)
+      name, default = name.to_s.split('=').map(&:strip)
+      value = eval(default) if value.nil?
+      set_ivar(name, value)
     end
 
     def set_splat
@@ -60,7 +68,10 @@ module Attire
     end
 
     def min_arity
-      names.last.is_a?(Hash) ? names.length - 1 : names.length
+      last_required = names.reverse_each.find_index do |n|
+        !(optional?(n) || n.is_a?(Hash))
+      end
+      last_required ? names.length - last_required : 0
     end
 
     def max_arity
@@ -69,6 +80,10 @@ module Attire
 
     def arity_range
       @arity_range ||= (min_arity..max_arity)
+    end
+
+    def optional?(name)
+      name.to_s.include?('=')
     end
   end
 end

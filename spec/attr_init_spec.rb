@@ -77,6 +77,16 @@ describe '#attr_init' do
       expect(instance.send(:foo)).to eq(1)
       expect(instance.send(:bar)).to eq(false)
     end
+
+    context 'with mutable default' do
+      subject { Class.new { attr_init foo: []; public :foo } }
+
+      it 'creates a dup of default' do
+        instance1 = subject.new
+        instance2 = subject.new
+        expect(instance1.foo).to_not be(instance2.foo)
+      end
+    end
   end
 
   describe 'after_initialize block' do

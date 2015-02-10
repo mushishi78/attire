@@ -1,3 +1,5 @@
+require 'attire/core_ext/duplicable'
+
 module Attire
   class Initializer
     def initialize(names, splat_name, block_name, after_initialize)
@@ -33,7 +35,8 @@ module Attire
       values ||= {}
       hash_check(values)
       defaults.each do |name, default|
-        set_ivar(name, values[name].nil? ? default : values[name])
+        next set_ivar(name, values[name]) unless values[name].nil?
+        set_ivar(name, default.duplicable? ? default.dup : default)
       end
     end
 

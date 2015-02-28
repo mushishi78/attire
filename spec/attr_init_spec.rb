@@ -55,6 +55,15 @@ describe '#attr_init' do
       subject { Class.new { attr_init :'foo = 13', :bar } }
       it { expect { subject }.to raise_error }
     end
+
+    context 'with an optional argument that relies on a previous argument' do
+      subject { Class.new { attr_init :foo, :'bar = foo * 2' } }
+
+      it 'uses the previous argument' do
+        instance = subject.new(4)
+        expect(instance.send(:bar)).to eq(8)
+      end
+    end
   end
 
   describe 'hash' do

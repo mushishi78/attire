@@ -42,7 +42,7 @@ module Attire
 
     def set_optional(name, value)
       name, default = name.to_s.split('=').map(&:strip)
-      value = eval(default) if value.nil?
+      value = instance.instance_eval(default) if value.nil?
       set_ivar(name, value)
     end
 

@@ -43,31 +43,32 @@ end
 Defines the following:
 
 ``` ruby
-attr_init :bar
-
 def self.select(*args, &block)
   new(*args, &block).select
 end
+
+attr_init :bar
 ```
 
 This is useful for method objects/use cases:
 
 ``` ruby
 class CheeseSpreader
-  attr_method :spread, :cheese, crackers: Jacobs.new
+  attr_method :spread, :cheese, crackers_class: Jacobs
 
   def spread
-    raise CheeseError unless cheese.is_a?(Cheddar)
-    cheese.spread_on(crackers)
+    cracker = crackers_class.new
+    cracker.spreads << cheese
+    cracker
   end
 end
 
-CheeseSpreader.spread(Roquefort.new) # CheeseError
+CheeseSpreader.spread(roquefort)
 ```
 
 ### `attr_query :foo?`
 
-Defines query `foo?`, which is true if `foo` is truthy.
+Defines query `#foo?`, which is true if `foo` is truthy.
 
 ## Installation
 

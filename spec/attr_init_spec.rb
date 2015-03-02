@@ -56,15 +56,6 @@ describe '#attr_init' do
       it { expect { subject }.to raise_error }
     end
 
-    context 'with an optional argument that relies on a previous argument' do
-      subject { Class.new { attr_init :foo, :'bar = foo * 2' } }
-
-      it 'uses the previous argument' do
-        instance = subject.new(4)
-        expect(instance.send(:bar)).to eq(8)
-      end
-    end
-
     context 'with a sub-class that overrides default' do
       let(:sub_class) do
         Class.new(subject) do
@@ -220,7 +211,7 @@ describe '#attr_init' do
   describe 'integration' do
     subject do
       Class.new do
-        attr_init(:foo, { a: 4, b: 6 }, :'*args', :'&block') { @a -= 1 }
+        attr_init(:foo, { a: 4, b: 6 }, :'*args', :'&block') { @a = a - 1 }
       end
     end
 

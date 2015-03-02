@@ -64,6 +64,26 @@ describe '#attr_init' do
         expect(instance.send(:bar)).to eq(8)
       end
     end
+
+    context 'with a sub-class that overrides default' do
+      let(:sub_class) do
+        Class.new(subject) do
+          def foo
+            @foo ||= 45
+          end
+        end
+      end
+
+      it 'assigns new default if argument missing' do
+        instance = sub_class.new
+        expect(instance.send(:foo)).to eq(45)
+      end
+
+      it 'assigns value if argument present' do
+        instance = sub_class.new(18)
+        expect(instance.send(:foo)).to eq(18)
+      end
+    end
   end
 
   describe 'hash' do
@@ -94,6 +114,26 @@ describe '#attr_init' do
         instance1 = subject.new
         instance2 = subject.new
         expect(instance1.foo).to_not be(instance2.foo)
+      end
+    end
+
+    context 'with a sub-class that overrides default' do
+      let(:sub_class) do
+        Class.new(subject) do
+          def bar
+            @bar ||= 45
+          end
+        end
+      end
+
+      it 'assigns new default if argument missing' do
+        instance = sub_class.new(1)
+        expect(instance.send(:bar)).to eq(45)
+      end
+
+      it 'assigns value if argument present' do
+        instance = sub_class.new(1, bar: 18)
+        expect(instance.send(:bar)).to eq(18)
       end
     end
   end

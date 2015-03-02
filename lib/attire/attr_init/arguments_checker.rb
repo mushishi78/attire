@@ -36,7 +36,7 @@ module Attire
         return unless splat?
         return if i == (@has_block ? 1 : 0)
         fail ArgumentError, \
-          'Splat arguments must come after required and optional arguments'
+             'Splat arguments must come after required and optional arguments'
       end
 
       def required_after_optional_check

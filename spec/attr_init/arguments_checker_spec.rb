@@ -45,12 +45,12 @@ module Attire
 
       describe '#required_after_optional_check' do
         it 'accepts if optionals are after requireds, with hashes whereever' do
-          args = [:foo, { bar: 23 }, :fizz, :'bam = 23', {quiz: 'yo'}, :'*args', :'&b']
+          args = [:foo, { bar: 23 }, :fizz, :'bam = 23', { quiz: 'yo' }, :'*args', :'&b']
           expect { subject.check(args) }.to_not raise_error
         end
 
         it 'does not allow requireds after optionals' do
-          args = [:foo, { bar: 23 }, :fizz, :'bam = 23', {quiz: 'yo'}, :danger, :'*args', :'&b']
+          args = [:foo, { bar: 23 }, :fizz, :'bam = 23', { quiz: 'yo' }, :danger, :'*args', :'&b']
           expect { subject.check(args) }.to raise_error
         end
       end

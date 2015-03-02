@@ -5,9 +5,11 @@
 
 Convenience methods to remove some boiler plate in defining classes. Inspired by [attr_extras](https://github.com/barsoom/attr_extras).
 
-## Usage
+## attr_init
 
-### `attr_init :foo, :bar, fizz: 15, pop: nil`
+``` ruby
+attr_init :foo, :bar, fizz: 15, pop: nil
+```
 
 Defines the following:
 
@@ -15,13 +17,17 @@ Defines the following:
 def initialize(foo, bar, opts = {})
 	@foo = foo
 	@bar = bar
-	@fizz = opts[:fizz] || 15
+	@fizz = opts[:fizz]
 	@pop = opts[:pop]
 end
 
 private
 
-attr_reader :foo, :bar, :fizz, :pop
+attr_reader :foo, :bar, :pop
+
+def fizz
+  @fizz ||= 15
+end
 ```
 
 Optional, splat and blocks arguments can also be defined:
@@ -38,7 +44,11 @@ attr_init :foo do
 end
 ```
 
-### `attr_method :select, :bar`
+## attr_method
+
+``` ruby
+attr_method :select, :bar
+```
 
 Defines the following:
 
@@ -66,7 +76,11 @@ end
 CheeseSpreader.spread(roquefort)
 ```
 
-### `attr_query :foo?`
+## attr_query
+
+``` ruby
+attr_query :foo?
+```
 
 Defines query `#foo?`, which is true if `foo` is truthy.
 

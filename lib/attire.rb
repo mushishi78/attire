@@ -10,7 +10,7 @@ module Attire
   end
 
   def attr_init(*args, &block)
-    AttrInit.apply(self, args, block)
+    include AttrInit.new(args, block)
   end
 
   def attr_method(verb, *args, &block)

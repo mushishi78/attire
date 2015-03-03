@@ -75,6 +75,28 @@ describe '#attr_init' do
         expect(instance.send(:foo)).to eq(18)
       end
     end
+
+    context 'uses super to get default' do
+      subject do
+        Class.new do
+          attr_init :'foo = 13'
+
+          def foo
+            @foo ||= super + 9
+          end
+        end
+      end
+
+      it 'assigns new default if argument missing' do
+        instance = subject.new
+        expect(instance.send(:foo)).to eq(22)
+      end
+
+      it 'assigns value if argument present' do
+        instance = subject.new(18)
+        expect(instance.send(:foo)).to eq(18)
+      end
+    end
   end
 
   describe 'hash' do
@@ -124,6 +146,28 @@ describe '#attr_init' do
 
       it 'assigns value if argument present' do
         instance = sub_class.new(1, bar: 18)
+        expect(instance.send(:bar)).to eq(18)
+      end
+    end
+
+    context 'uses super to get default' do
+      subject do
+        Class.new do
+          attr_init :foo, bar: 23
+
+          def bar
+            @bar ||= super + 9
+          end
+        end
+      end
+
+      it 'assigns new default if argument missing' do
+        instance = subject.new(1)
+        expect(instance.send(:bar)).to eq(32)
+      end
+
+      it 'assigns value if argument present' do
+        instance = subject.new(1, bar: 18)
         expect(instance.send(:bar)).to eq(18)
       end
     end

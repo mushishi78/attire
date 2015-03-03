@@ -1,10 +1,11 @@
 require 'attire/core_ext/duplicable'
 require_relative 'arguments_checker'
+require_relative 'values_matcher'
 
 module Attire
   module AttrInit
     class Arguments
-      def initialize(arguments)
+      def initialize(arguments, after_block = nil)
         ArgumentsChecker.check(arguments)
         @block = last_argument_with_prefix(arguments, '&')
         @splat = last_argument_with_prefix(arguments, '*')
@@ -12,9 +13,15 @@ module Attire
         arguments.each { |arg| extract_argument(arg) }
         @arity_range = (min_arity..max_arity)
         @getter_names = (names.flatten + [splat, block]).compact
+        @after_block = after_block
       end
 
-      attr_reader :names, :splat, :block, :defaults, :arity_range, :getter_names
+      attr_reader :names, :splat, :block, :defaults, :arity_range,
+                  :getter_names, :after_block
+
+      def values_matcher
+        @values_matcher ||= ValuesMatcher.new(self)
+      end
 
       private
 

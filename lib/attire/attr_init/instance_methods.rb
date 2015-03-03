@@ -11,8 +11,8 @@ module Attire
 
       def _arity_check(values)
         return if _arity_range.include?(values.length)
-        fail ArgumentError, "wrong number of arguments "\
-                            "(#{values.length} for #{_arity_range})"
+        msg = "wrong number of arguments (#{values.length} for #{_arity_range})"
+        fail ArgumentError, msg
       end
 
       def _get_attribute(name, default)

@@ -5,7 +5,7 @@
 
 Mixins to remove some boiler plate in defining classes.
 
-**N.B. This is the README for version 2.0.0. Major changes have been made. For previous versions please consult the tagged commit.**
+**N.B. This is the README for version 2.0. This release is written for Ruby 2.0 or higher. For previous versions please consult the tagged releases.**
 
 ## Initializer
 
@@ -32,7 +32,7 @@ my_instance.result # 98
 
 ## MethodObject
 
-`Attire::MethodObject` does the same as `Attire::Initializer` but it also adds a singleton method that creates an instance and then calls an instance method. This is useful for objects that are designed to do one task. For example:
+`Attire::MethodObject` does the same as `Attire::Initializer` but it also adds a singleton method that creates an instance and then calls an instance method of the same name. This is useful for objects that are designed to do one task. For example:
 
 ``` ruby
 class CheeseSpreader

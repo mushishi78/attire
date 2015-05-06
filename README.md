@@ -3,86 +3,52 @@
 [![Build Status](https://travis-ci.org/mushishi78/attire.svg?branch=master)](https://travis-ci.org/mushishi78/attire)
 [![Gem Version](https://badge.fury.io/rb/attire.svg)](http://badge.fury.io/rb/attire)
 
-Convenience methods to remove some boiler plate in defining classes. Inspired by [attr_extras](https://github.com/barsoom/attr_extras).
+Mixins to remove some boiler plate in defining classes.
 
-## attr_init
+**N.B. This is the README for version 2.0.0. Major changes have been made. For previous versions please consult the tagged commit.**
 
-``` ruby
-attr_init :foo, :bar, fizz: 15, pop: nil
-```
+## Initializer
 
-Defines the following:
+`Attire::Initializer` extends a subsequent initialize method so that all it's parameters are assigned to instance variables and they can all be reached from private getters. For example:
 
 ``` ruby
-def initialize(foo, bar, opts = {})
-	@foo = foo
-	@bar = bar
-	@fizz = opts[:fizz]
-	@pop = opts[:pop]
+require 'attire'
+
+class MyClass
+  extend Attire::Initializer
+
+  def initialize(foo:, bar: 24)
+    @bar = bar * 2
+  end
+
+  def result
+    foo + bar
+  end
 end
 
-private
-
-attr_reader :foo, :bar, :pop
-
-def fizz
-  @fizz ||= 15
-end
+my_instance = MyClass.new(foo: 50)
+my_instance.result # 98
 ```
 
-Optional, splat and blocks arguments can also be defined:
+## MethodObject
 
-``` ruby
-attr_init :'opts = {}', :'*args', :'&block'
-```
-
-If a block is provided, it will be evaluated after initialization:
-
-``` ruby
-attr_init :foo do
-  @foo = foo ** 2
-end
-```
-
-## attr_method
-
-``` ruby
-attr_method :select, :bar
-```
-
-Defines the following:
-
-``` ruby
-def self.select(*args, &block)
-  new(*args, &block).select
-end
-
-attr_init :bar
-```
-
-This is useful for method objects/use cases:
+`Attire::MethodObject` does the same as `Attire::Initializer` but it also adds a singleton method that creates an instance and then calls an instance method. This is useful for objects that are designed to do one task. For example:
 
 ``` ruby
 class CheeseSpreader
-  attr_method :spread, :cheese, crackers_class: Jacobs
+  extend Attire::MethodObject.new(:spread)
+
+  def initialize(cheese, cracker: Jacobs.new)
+  end
 
   def spread
-    cracker = crackers_class.new
     cracker.spreads << cheese
     cracker
   end
 end
 
-CheeseSpreader.spread(roquefort)
+CheeseSpreader.spread(:roquefort)
 ```
-
-## attr_query
-
-``` ruby
-attr_query :foo?
-```
-
-Defines query `#foo?`, which is true if `foo` is truthy.
 
 ## Installation
 
@@ -92,11 +58,9 @@ Add to Gemfile:
 gem 'attire'
 ```
 
-Require library:
+## Inspirations
 
-``` ruby
-require 'attire'
-```
+* [attr_extras](https://github.com/barsoom/attr_extras).
 
 ## Contributing
 

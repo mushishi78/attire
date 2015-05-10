@@ -12,4 +12,5 @@ Gem::Specification.new do |s|
   s.files        = Dir['LICENSE.txt', 'README.md', 'lib/**/*']
   s.require_path = 'lib'
   s.add_development_dependency 'rspec', '~> 3.1', '>= 3.1.0'
+  s.add_development_dependency 'contracts'
 end

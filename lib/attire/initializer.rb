@@ -6,12 +6,14 @@ module Attire
 
     def method_added(method_name)
       return super unless method_name == :initialize && !added?
+
+      self.added = true
       method = instance_method(:initialize)
+      super
+
       names = method.parameters.map(&:last)
       add_initialize(method, names)
       add_getters(names)
-      self.added = true
-      super
     end
 
     private

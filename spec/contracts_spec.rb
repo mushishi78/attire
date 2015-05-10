@@ -17,6 +17,6 @@ describe 'Initializer' do
   end
 
   it 'should still have contract apply to initialize' do
-    expect { MyClass.new(foo: 'yo') }.to raise_error
+    expect { MyClass.new(foo: 'yo', bar: 99) }.to raise_error(ParamContractError)
   end
 end

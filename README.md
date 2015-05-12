@@ -3,43 +3,50 @@
 [![Build Status](https://travis-ci.org/mushishi78/attire.svg?branch=master)](https://travis-ci.org/mushishi78/attire)
 [![Gem Version](https://badge.fury.io/rb/attire.svg)](http://badge.fury.io/rb/attire)
 
-Mixins to remove some boiler plate in defining classes.
+Helper to remove some boiler plate in defining classes.
 
-**N.B. This is the README for version 2.0. This release is written for Ruby 2.0 or higher. For previous versions please consult the tagged releases.**
+## Usage
 
-## Initializer
+The `attire` method defines an `initialize` method where all it's parameters are stored as instance variables that can be retrieve with private getters. So a class defined like this:
 
-`Attire::Initializer` extends a subsequent initialize method so that all it's parameters are assigned to instance variables and they can all be reached from private getters. For example:
-
-``` ruby
-require 'attire'
-
-class MyClass
-  extend Attire::Initializer
-
-  def initialize(foo:, bar: 24)
-    @bar = bar * 2
+```ruby
+class Measurement
+  def initialize(value:, units: :grams)
+    @value = value
+    @units = units
   end
 
-  def result
-    foo + bar
+  def to_s
+    "#{value} (#{units})"
   end
+
+  private
+
+  attr_reader :value, :units
 end
-
-my_instance = MyClass.new(foo: 50)
-my_instance.result # 98
 ```
 
-## MethodObject
+Can be shortened to:
 
-`Attire::MethodObject` does the same as `Attire::Initializer` but it also adds a singleton method that creates an instance and then calls an instance method of the same name. This is useful for objects that are designed to do one task. For example:
+```ruby
+require 'attire'
+
+class Measurement
+  attire 'value:, units: :grams'
+
+  def to_s
+    "#{value} (#{units})"
+  end
+end
+```
+
+### Method Objects
+
+Sometimes it's useful for objects that are designed to do only a single task to have a class method that both initializes the object and executes the task. For this purpose, `attire` allows you to set the `verb` keyword like so:
 
 ``` ruby
 class CheeseSpreader
-  extend Attire::MethodObject.new(:spread)
-
-  def initialize(cheese, cracker: Jacobs.new)
-  end
+  attire 'cheese, cracker: Jacobs.new', verb: :spread
 
   def spread
     cracker.spreads << cheese

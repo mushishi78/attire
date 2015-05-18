@@ -30,4 +30,9 @@ describe Attire do
   it 'creates method objects with verb argument' do
     expect(Multiplier.multiply(a: 10)).to eq(350)
   end
+
+  it 'does not pollute with helper methods' do
+    helper_methods = :def_init, :ivars, :add_getters, :def_verb
+    expect(Foo.private_methods).to_not include(*helper_methods)
+  end
 end

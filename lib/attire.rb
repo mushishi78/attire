@@ -24,13 +24,13 @@ module Attire
     end
 
     def def_verb(base, verb)
-      base.define_singleton_method(verb) { |*a, **k, &b| new(*a, **k, &b).send(verb) }
+      base.define_singleton_method(verb) { |*a, &b| new(*a, &b).send(verb) }
     end
   end
 end
 
 class Module
-  def attire(*a, **k, &b)
-    Attire.attire(self, *a, **k, &b)
+  def attire(*a, &b)
+    Attire.attire(self, *a, &b)
   end
 end
